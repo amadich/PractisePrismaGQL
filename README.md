@@ -2,6 +2,9 @@
 
 This is a server-side application built with Node.js, TypeScript, Prisma, and GraphQL. It provides a backend for managing user data and includes features like authentication, database interaction, and GraphQL API.
 
+<img width="1099" height="597" alt="image" src="https://github.com/user-attachments/assets/15114c39-3072-4a16-90df-e5364a9f068a" />
+
+
 ## Project Structure
 
 ```
