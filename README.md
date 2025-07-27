@@ -54,7 +54,7 @@ servre/
 
 3. Install dependencies:
    ```bash
-   npm install
+   yarn install
    ```
 
 ## Usage
@@ -63,15 +63,46 @@ servre/
    - Update the `DATABASE_URL` in the `.env` file.
    - Run Prisma migrations:
      ```bash
-     npx prisma migrate dev
+     yarn prisma migrate dev
      ```
 
 2. Start the server:
    ```bash
-   npm run start
+   yarn start
    ```
 
 3. Access the GraphQL Playground at `http://localhost:4000`.
+
+## Creating the `server.ts`
+
+The `server.ts` file is the entry point of the application. It initializes the server and sets up middleware, routes, and GraphQL schema. Below is an example of how to create it:
+
+```typescript
+import express from 'express';
+import { ApolloServer } from 'apollo-server-express';
+import { schema } from './graphql/schema';
+import { context } from './config/prismaClient';
+import { authMiddleware } from './middleware/authMiddleware';
+
+const app = express();
+
+// Apply authentication middleware
+app.use(authMiddleware);
+
+// Initialize Apollo Server
+const server = new ApolloServer({
+  schema,
+  context,
+});
+
+await server.start();
+server.applyMiddleware({ app });
+
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}${server.graphqlPath}`);
+});
+```
 
 ## Scripts
 
